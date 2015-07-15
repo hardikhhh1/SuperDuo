@@ -23,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-//import com.google.zxing.integration.android.IntentIntegrator;
-//import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
@@ -60,17 +60,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        IntentResult isbnResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if(isbnResult != null){
-//            String scanContent = isbnResult.getContents();
-//            ean.setText(scanContent);
-//        }else{
-//            Toast toast = Toast.makeText(getActivity(),
-//                    "Not able to scan the isbn!", Toast.LENGTH_SHORT);
-//            toast.show();
-//        }
-
-
+        IntentResult isbnResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(isbnResult != null){
+            String scanContent = isbnResult.getContents();
+            ean.setText(scanContent);
+        }else{
+            Toast toast = Toast.makeText(getActivity(),
+                    "Not able to scan the isbn!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     @Override
@@ -81,8 +79,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         // Hint: Use a Try/Catch block to handle the Intent dispatch gracefully, if you
         // are using an external app.
         //when you're done, remove the toast below.
-//        IntentIntegrator.forSupportFragment(this).initiateScan();
-
+        IntentIntegrator.forSupportFragment(this).initiateScan();
     }
 
     @Override
@@ -175,15 +172,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         ConnectivityManager manager =
                 (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
-        if(info == null){
-            TextView emptyView = (TextView) rootView.findViewById(R.id.no_connection);
-            emptyView.setText("The device is not connected to the network.");
-            return ;
-        }
-        if(!info.isConnected()){
-            TextView emptyView = (TextView) rootView.findViewById(R.id.no_connection);
-            emptyView.setText("The device is not connected to the network.");
-        }
+//        if(info == null){
+//            TextView emptyView = (TextView) rootView.findViewById(R.id.no_connection);
+//            emptyView.setText("The device is not connected to the network.");
+//            return ;
+//        }
+//        if(!info.isConnected()){
+//            TextView emptyView = (TextView) rootView.findViewById(R.id.no_connection);
+//            emptyView.setText("The device is not connected to the network.");
+//        }
     }
 
     private void restartLoader(){

@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/no_connection"
+            android:id="@+id/bookTitle"
             android:textSize="@dimen/head_line"
             android:textIsSelectable="true"
             android:textStyle="bold"
@@ -51,19 +51,6 @@
             android:layout_alignStart="@+id/eancontainer"/>
 
         <TextView
-            android:text="The device is not connected to network."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/noconnectioncontainer"
-            android:textSize="@dimen/head_line"
-            android:textIsSelectable="true"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:paddingRight="20dp"
-            android:layout_below="@+id/eancontainer"
-            android:visibility="invisible"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bookSubTitle"
@@ -71,7 +58,7 @@
             android:layout_below="@+id/bookTitle"
             android:maxLines="3"
             android:ellipsize="end"
-            android:layout_alignLeft="@+id/noconnectioncontainer"
+            android:layout_alignLeft="@+id/eancontainer"
             />
 
         <TextView
