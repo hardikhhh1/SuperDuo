@@ -91,7 +91,7 @@ public class BookService extends IntentService {
         if(bookEntry.getCount()>0){
             bookEntry.close();
             return;
-        }   
+        }
 
         bookEntry.close();
 
