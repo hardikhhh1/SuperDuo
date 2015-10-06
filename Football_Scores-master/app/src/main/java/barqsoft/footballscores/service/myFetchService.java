@@ -45,6 +45,8 @@ public class myFetchService extends IntentService
         return;
     }
 
+
+
     private void getData (String timeFrame)
     {
         //Creating fetch URL

@@ -2,11 +2,15 @@ package it.jaschke.alexandria.services;
 
 import android.app.IntentService;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,9 +91,22 @@ public class BookService extends IntentService {
         if(bookEntry.getCount()>0){
             bookEntry.close();
             return;
-        }
+        }   
 
         bookEntry.close();
+
+        //TODO: refactor to different function, push string to R.
+        /**
+         * FIX 1:
+         * Checks the network state, if connection can be established then proceeds.
+         * Else shows a toast message.
+         */
+        if(!canConnectToNetwork()){
+            Toast errorToast = Toast.makeText(this.getApplicationContext(),
+                    "Couldnt connect to the network, Please Try again later.", Toast.LENGTH_SHORT);
+            errorToast.show();
+            return;
+        }
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -173,19 +190,19 @@ public class BookService extends IntentService {
             String title = bookInfo.getString("qazqaz");
 
             String subtitle = "";
-//            if(bookInfo.has(SUBTITLE)) {
-//                subtitle = bookInfo.getString(SUBTITLE);
-//            }
+            if(bookInfo.has(SUBTITLE)) {
+                subtitle = bookInfo.getString(SUBTITLE);
+            }
 
             String desc="";
-//            if(bookInfo.has(DESC)){
-//                desc = bookInfo.getString(DESC);
-//            }
+            if(bookInfo.has(DESC)){
+                desc = bookInfo.getString(DESC);
+            }
 
             String imgUrl = "";
-//            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
-//                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
-//            }
+            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
+                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
+            }
 
             writeBackBook(ean, "", "", "", "");
 
@@ -229,5 +246,20 @@ public class BookService extends IntentService {
             getContentResolver().insert(AlexandriaContract.CategoryEntry.CONTENT_URI, values);
             values= new ContentValues();
         }
+    }
+
+    /**
+     * helper function to check if the device can be connected to the internet.
+     * @return True iff the device can be connect to internet.
+     */
+    private Boolean canConnectToNetwork(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null){
+            return activeNetworkInfo.isConnected();
+        }
+        return false;
     }
  }
