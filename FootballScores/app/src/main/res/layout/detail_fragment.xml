@@ -7,7 +7,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
         <TextView
-            android:contentDescription="@string/description_league_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -17,7 +16,6 @@
             android:textSize="@dimen/League"
             android:id="@+id/league_textview"/>
         <TextView
-            android:contentDescription="@string/description_match_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -32,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
         <Button
-        android:contentDescription="@string/description_share_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
