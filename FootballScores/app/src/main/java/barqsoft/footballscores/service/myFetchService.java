@@ -1,6 +1,8 @@
 package barqsoft.footballscores.service;
 
 import android.app.IntentService;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import java.util.Vector;
 
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.ScoresWidgetProvider;
 
 /**
  * Created by yehya khaled on 3/2/2015.
@@ -131,6 +134,11 @@ public class myFetchService extends IntentService
             Log.e(LOG_TAG,e.getMessage());
         }
     }
+
+
+
+
+
     private void processJSONdata (String JSONdata,Context mContext, boolean isReal)
     {
         //JSON data
@@ -256,6 +264,12 @@ public class myFetchService extends IntentService
                     //Log.v(LOG_TAG,Home_goals);
                     //Log.v(LOG_TAG,Away_goals);
 
+
+                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                    ComponentName componentName = new ComponentName(this, ScoresWidgetProvider.class);
+                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+                    ScoresWidgetProvider.updateWidget(getPackageName(), appWidgetManager,
+                            appWidgetIds, "Arsenal London FC", "Manchester United FC", Home_goals, Away_goals);
                     values.add(match_values);
                 }
             }
