@@ -32,21 +32,26 @@ public class ScoresWidgetProvider extends AppWidgetProvider{
 
     public static void updateWidget(String packageName,  AppWidgetManager appWidgetManager,
                                     int[] appWidgetIds, String homeTeamName,
-                                    String awayTeamName, String homeScore, String awayScore){
+                                    String awayTeamName, String homeScore, String awayScore,
+                                    String matchTime){
         int layoutId = R.layout.football_scores_widget;
 
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(packageName, layoutId);
 
-            views.setImageViewResource(R.id.widget_home_icon, Utilies.getTeamCrestByTeamName(homeTeamName));
-//            views.setTextViewText(R.id.home_name, homeTeamName);
+            views.setImageViewResource(R.id.widget_home_icon,
+                    Utilies.getTeamCrestByTeamName(homeTeamName));
+            views.setTextViewText(R.id.widget_home_name, homeTeamName);
 
             views.setTextViewText(R.id.score_textview,
-                    Utilies.getScores(Integer.parseInt(homeScore), Integer.parseInt(awayScore)));
-//            views.setTextViewText(R.id.match_time_textview, mTime);
+                    Utilies.getScores(Integer.parseInt(homeScore),
+                            Integer.parseInt(awayScore)));
 
-            views.setImageViewResource(R.id.widget_away_icon, Utilies.getTeamCrestByTeamName(awayTeamName));
-//            views.setTextViewText(R.id.wi, awayTeamName);
+            views.setTextViewText(R.id.widget_time, matchTime);
+
+            views.setImageViewResource(R.id.widget_away_icon,
+                    Utilies.getTeamCrestByTeamName(awayTeamName));
+            views.setTextViewText(R.id.widget_away_name, awayTeamName);
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }

@@ -4,22 +4,53 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/widget_home_icon"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="40dp"
-        android:minWidth="40dp" />
-    <TextView
-        android:id="@+id/widget_scores"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/widget_home_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/widget_home_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_home_icon"
+            android:layout_alignLeft="@id/widget_home_icon"
+            android:layout_alignRight="@id/widget_home_icon"/>/>
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/widget_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/widget_scores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/widget_away_icon"
+
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="40dp"
-        android:minWidth="40dp"/>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/widget_away_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/widget_away_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_away_icon"
+            android:layout_alignLeft="@id/widget_away_icon"
+            android:layout_alignRight="@id/widget_away_icon"/>
+    </RelativeLayout>
+
 
 </LinearLayout>
