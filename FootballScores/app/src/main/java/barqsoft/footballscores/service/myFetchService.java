@@ -269,7 +269,7 @@ public class myFetchService extends IntentService
                     ComponentName componentName = new ComponentName(this, ScoresWidgetProvider.class);
                     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
                     ScoresWidgetProvider.updateWidget(getPackageName(), appWidgetManager,
-                            appWidgetIds, "Arsenal London FC", "Manchester United FC", Home_goals, Away_goals,
+                            appWidgetIds, Home, Away, Home_goals, Away_goals,
                             mTime);
                     values.add(match_values);
                 }
