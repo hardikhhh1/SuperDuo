@@ -70,12 +70,18 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void afterTextChanged(Editable s) {
                 String ean =s.toString();
+
+                // BUG FIX : If the ean is empty.
+                if(ean.isEmpty()){
+                    clearFields();
+                }
                 //catch isbn10 numbers
                 if(ean.length()==10 && !ean.startsWith("978")){
                     ean="978"+ean;
                 }
                 if(ean.length()<13){
-                    clearFields();
+                    // BUG FIX: Shouldnt clear fields when the length is
+                    // less
                     return;
                 }
                 //Once we have an ISBN, start a book intent
@@ -110,6 +116,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void onClick(View view) {
                 ean.setText("");
+                // Initially clear the fields
+                clearFields();
             }
         });
 
@@ -121,6 +129,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 ean.setText("");
+                // When the text is set empty, clear the fields
+                clearFields();
             }
         });
 
@@ -168,9 +178,19 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText(bookSubTitle);
 
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
-        String[] authorsArr = authors.split(",");
+        String[] authorsArr;
+        String authorsText;
+        if(authors == null){
+            authorsArr = new String[0];
+            authorsText = "";
+        } else {
+            authorsArr = authors.split(",");
+            authorsText = authors.replace(",","\n");
+        }
         ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
-        ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",","\n"));
+
+
+        ((TextView) rootView.findViewById(R.id.authors)).setText(authorsText);
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
             new DownloadImage((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
