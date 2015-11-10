@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.List;
+
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
@@ -73,7 +75,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
                     ((Callback)getActivity())
                             .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
                 }
-                restartLoader();
+                ListOfBooks.this.restartLoader();
             }
         });
 

@@ -103,12 +103,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 // are using an external app.
                 //when you're done, remove the toast below.
                 Context context = getActivity();
-                CharSequence text = "This button should let you scan a book for its barcode!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
+                Intent scannerIntent = new Intent(context, ScannerActivity.class);
+                startActivityForResult(scannerIntent);
             }
         });
 
@@ -131,6 +127,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 ean.setText("");
                 // When the text is set empty, clear the fields
                 clearFields();
+                AddBook.this.restartLoader();
             }
         });
 
@@ -202,6 +199,16 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == 1){
+                ean.setText(data.getStringExtra(ScannerActivity.SCANNER_TAG));
+            }
+        }
     }
 
     @Override
