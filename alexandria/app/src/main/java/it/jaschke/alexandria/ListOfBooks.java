@@ -73,6 +73,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
                     ((Callback)getActivity())
                             .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
                 }
+                restartLoader();
             }
         });
 
@@ -85,6 +86,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
 
         final String selection = AlexandriaContract.BookEntry.TITLE +" LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
         String searchString =searchText.getText().toString();
