@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import it.jaschke.alexandria.data.AlexandriaContract;
@@ -29,6 +28,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private static final String TAG = "INTENT_TO_SCAN_ACTIVITY";
     private EditText ean;
     private final int LOADER_ID = 1;
+    private final int REQUEST_CODE = 1;
     private View rootView;
     private final String EAN_CONTENT="eanContent";
     private static final String SCAN_FORMAT = "scanFormat";
@@ -104,7 +104,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 //when you're done, remove the toast below.
                 Context context = getActivity();
                 Intent scannerIntent = new Intent(context, ScannerActivity.class);
-                startActivityForResult(scannerIntent);
+                startActivityForResult(scannerIntent, REQUEST_CODE);
             }
         });
 
@@ -205,7 +205,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK){
-            if(requestCode == 1){
+            if(requestCode == REQUEST_CODE){
                 ean.setText(data.getStringExtra(ScannerActivity.SCANNER_TAG));
             }
         }

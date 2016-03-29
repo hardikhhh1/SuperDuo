@@ -187,7 +187,7 @@ public class BookService extends IntentService {
 
             JSONObject bookInfo = ((JSONObject) bookArray.get(0)).getJSONObject(VOLUME_INFO);
 
-            String title = bookInfo.getString("qazqaz");
+            String title = bookInfo.getString(TITLE);
 
             String subtitle = "";
             if(bookInfo.has(SUBTITLE)) {
